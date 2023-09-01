@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PilotLogbook</string>
+    <string name="hello">Hello!</string>
+    <string name="hello2">Welcome to your own logbook, choose whether you want to connect to external database or use a local one</string>
+    <string name="use_local_database">Use Local Database</string>
+    <string name="connect_to_external_database">Connect to External Database</string>
+    <string name="save_my_choice">Save my choice</string>
+</resources>
