@@ -1,9 +1,12 @@
 package com.mod3223.pilotlogbook;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -15,8 +18,8 @@ import android.widget.Switch;
 
 public class MainActivity extends AppCompatActivity {
 
-    MyDatabase myDatabase ;
-    SQLiteDatabase db;
+    public static MyDatabase myDatabase ;
+    public static SQLiteDatabase db;
     public static int LogbookID;
     public static int RatingID;
     public static int SynthID;
@@ -31,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
     
 
     public void btnLocalDB_Clicked(View v) {
+        IsLocal = true;
+        myDatabase = null;
+        db = null;
+        myDatabase = new MyDatabase(getApplicationContext());
+        db = myDatabase.getWritableDatabase();
+        Testing();
+
         if (SaveDBChoice.isChecked()){
             prefsEditor.putString("DBChoice","LocalDB");
             prefsEditor.apply();
@@ -38,9 +48,23 @@ public class MainActivity extends AppCompatActivity {
         else{
             prefsEditor.remove("DBChoice");
         }
+        Intent intent = new Intent(this, LoginDB.class);
+        startActivity(intent);
     }
 
     public void btnExternalDB_Clicked(View v){
+        myDatabase = null;
+        db = null;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("ERROR!").setMessage("This feature is not yet implemented!");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
         if (SaveDBChoice.isChecked()){
             prefsEditor.putString("DBChoice","ExternalDB");
             prefsEditor.apply();
@@ -84,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
             else{
                 //TODO: Throw exception
             }
+            cursor.close();
         }
         catch (Exception ex){
 
@@ -122,10 +147,7 @@ public class MainActivity extends AppCompatActivity {
         prefs = getSharedPreferences("com.mod3223.pilotlogbook",Context.MODE_PRIVATE);
         prefsEditor = prefs.edit();
         SaveDBChoice = findViewById(R.id.switchSaveDBChoice);
-        myDatabase = new MyDatabase(getApplicationContext());
-        db = myDatabase.getWritableDatabase();
-        Testing();
-
+        //TODO: Add navigation| For some reason it crashes :/
     }
     @Override
     protected void onDestroy(){
