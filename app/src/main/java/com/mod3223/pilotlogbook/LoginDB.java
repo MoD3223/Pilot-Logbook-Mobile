@@ -1,8 +1,9 @@
 package com.mod3223.pilotlogbook;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -46,10 +47,47 @@ public class LoginDB extends AppCompatActivity {
                         }
 
                         if (backgroundColor == Color.RED){
-                            //TODO: Prompt to delete the user
+                            AlertDialog.Builder builder = new AlertDialog.Builder(LoginDB.this);
+                            builder.setTitle("Really delete?").setMessage("Are you sure you want to delete this user?");
+                            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                    String login = button.getText().toString();
+                                    int RowsDeleted = MainActivity.db.delete("Pilots","Login = ?", new String[]{login});
+                                    if (RowsDeleted == 0){
+                                        AlertDialog.Builder builder1 = new AlertDialog.Builder(getBaseContext());
+                                        builder1.setTitle("ERROR").setMessage("Couldn't delete the specified profile");
+                                        builder1.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                dialogInterface.dismiss();
+                                            }
+                                        });
+                                        builder1.create().show();
+                                    }
+                                    recreate();
+                                }
+                            });
+                            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.dismiss();
+                                }
+                            });
+
+                                builder.create().show();
+
                         }
                         else{
-                            String password = cursor.getString(cursor.getColumnIndex("Password"));
+                            String password;
+                            try {
+                                //Required! Otherwise the app crashes when calling password
+                                password = cursor.getString(cursor.getColumnIndex("Password"));
+                            }
+                            catch (Exception ex){
+                                password = null;
+                            }
                             if (password != null){
                                 //TODO: Add navigation to password page
                             }
@@ -78,7 +116,9 @@ public class LoginDB extends AppCompatActivity {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: Navigate to create new user page
+                Intent intent = new Intent(LoginDB.this, CreateNewUser.class);
+                startActivity(intent);
+
             }
         });
         btnLayout.addView(create);
@@ -94,9 +134,10 @@ public class LoginDB extends AppCompatActivity {
                         View childView = btnLayout.getChildAt(i);
                         if (childView instanceof Button){
                             Button button = (Button) childView;
-                            button.setBackgroundColor(Color.TRANSPARENT);
+                            button.setBackgroundColor(Color.LTGRAY);
                         }
                     }
+                    boolDelete = !boolDelete;
                 }
                 else{
                     for (int i = 0; i < btnLayout.getChildCount() - 2; i++) {
@@ -106,6 +147,7 @@ public class LoginDB extends AppCompatActivity {
                             button.setBackgroundColor(Color.RED);
                         }
                     }
+                    boolDelete = !boolDelete;
                 }
             }
         });

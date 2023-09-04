@@ -63,8 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 dialogInterface.dismiss();
             }
         });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        builder.create().show();
         if (SaveDBChoice.isChecked()){
             prefsEditor.putString("DBChoice","ExternalDB");
             prefsEditor.apply();
