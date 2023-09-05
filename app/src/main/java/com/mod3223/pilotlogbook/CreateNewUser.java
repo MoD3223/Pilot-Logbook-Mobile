@@ -39,7 +39,7 @@ public class CreateNewUser extends AppCompatActivity {
                 String Address = AddressText.getText().toString();
                 String Phone = PhoneText.getText().toString();
                try {
-                   MainActivity.db.execSQL("INSERT INTO Pilots VALUES (?,?,?,?);", new String[]{Login,Password,Address,Phone});
+                   MainActivity.db.execSQL("INSERT INTO Pilots VALUES (?,?,?,?);", new String[]{Login,Phone,Address,Password});
                    MainActivity.db.close();
                }
                catch (SQLException ex){

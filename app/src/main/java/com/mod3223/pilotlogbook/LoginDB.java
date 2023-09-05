@@ -80,16 +80,18 @@ public class LoginDB extends AppCompatActivity {
 
                         }
                         else{
-                            String password;
+                            String password = null;
                             try {
-                                //Required! Otherwise the app crashes when calling password
-                                password = cursor.getString(cursor.getColumnIndex("Password"));
+                                Cursor haslo = MainActivity.db.rawQuery("SELECT Password from Pilots where Login = ?", new String[]{button.getText().toString()});
+                                haslo.moveToFirst();
+                                password = haslo.getString(haslo.getColumnIndex("Password"));
+                                haslo.close();
                             }
                             catch (Exception ex){
-                                password = null;
+
                             }
-                            if (password != null){
-                                //TODO: Add navigation to password page
+                            if (password != null && password != ""){
+                                startActivity(new Intent(LoginDB.this,PasswordLogin.class).putExtra("Login", button.getText().toString()).putExtra("Password",password));
                             }
                             else{
                                 //TODO: Add navigation to tabbed page

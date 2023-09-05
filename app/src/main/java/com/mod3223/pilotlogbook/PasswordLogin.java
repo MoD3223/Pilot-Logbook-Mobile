@@ -20,37 +20,30 @@ public class PasswordLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_login);
         EditText Edit = (EditText) findViewById(R.id.editTextTextPassword);
-        String password = Edit.getText().toString();
         Button button = (Button) findViewById(R.id.btnCheckPassword);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = getIntent();
-                String Login = intent.getStringExtra("Login");
-                Cursor cursor = MainActivity.db.rawQuery("SELECT Password FROM Pilots WHERE Login = ?" ,new String[]{Login});
-                if (cursor.moveToFirst()){
-                    if (cursor.getString(cursor.getColumnIndex("Password")) == password){
-                        cursor.close();
-                        //TODO: Navigate properly, password is correct
+                String password = Edit.getText().toString();
+
+                    if (intent.getStringExtra("Password").equals(password)){
+
+                        //TODO: Navigate properly, password is correct, remember to put Login as Intent to pass it later
                     }
                     else{
                         //Incorrect password
                         if (Tries == 3){
-                            cursor.close();
                             System.exit(0);
                         }
                         else{
                             Tries++;
                             TextView textView = (TextView) findViewById(R.id.textView5);
-                            textView.setText(String.format("INCORRECT PASSWORD! REMAINING TRIES: %s",Tries));
-                            cursor.close();
+                            textView.setText(String.format("INCORRECT PASSWORD! REMAINING TRIES: %s",3 - Tries));
                         }
 
                     }
-                }
-                else{
-                    //TODO: Throw error
-                }
+
             }
         });
 
