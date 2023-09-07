@@ -13,6 +13,9 @@
         android:theme="@style/Theme.PilotLogbook"
         tools:targetApi="31">
         <activity
+            android:name=".MainTabbedPage"
+            android:exported="false" />
+        <activity
             android:name=".CreateNewUser"
             android:exported="false" />
         <activity

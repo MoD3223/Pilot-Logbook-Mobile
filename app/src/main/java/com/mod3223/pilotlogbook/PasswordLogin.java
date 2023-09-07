@@ -29,7 +29,7 @@ public class PasswordLogin extends AppCompatActivity {
 
                     if (intent.getStringExtra("Password").equals(password)){
 
-                        //TODO: Navigate properly, password is correct, remember to put Login as Intent to pass it later
+                        startActivity(new Intent(PasswordLogin.this, MainTabbedPage.class).putExtra("Login",button.getText().toString()));
                     }
                     else{
                         //Incorrect password

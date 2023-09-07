@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.PilotLogbook" parent="Base.Theme.PilotLogbook" />
+    <style name="Theme.PilotLogbook.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.PilotLogbook.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.PilotLogbook.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

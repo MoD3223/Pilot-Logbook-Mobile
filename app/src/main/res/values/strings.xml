@@ -16,4 +16,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="enter_your_password">Enter your password</string>
+    <string name="title_activity_main_tabbed_page">Main tabbed page</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 </resources>

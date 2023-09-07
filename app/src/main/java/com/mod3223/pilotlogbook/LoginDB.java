@@ -90,14 +90,11 @@ public class LoginDB extends AppCompatActivity {
                             catch (Exception ex){
 
                             }
-                            if (password != null && password != ""){
+                            if (!password.equals("")){
                                 startActivity(new Intent(LoginDB.this,PasswordLogin.class).putExtra("Login", button.getText().toString()).putExtra("Password",password));
                             }
                             else{
-                                //TODO: Add navigation to tabbed page
-//                    Intent intent = new Intent(this,CLASS);
-//                    intent.putExtra("Login",button.getText());
-//                    startActivity(intent);
+                                startActivity(new Intent(LoginDB.this, MainTabbedPage.class).putExtra("Login",button.getText().toString()));
                             }
                         }
 
